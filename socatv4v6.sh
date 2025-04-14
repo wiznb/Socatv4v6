@@ -83,7 +83,7 @@ start_socat(){
         chmod +x /etc/rc.local
     else
         echo -e "${Green}检测到系统无 rc.local，自启将进行配置...${Font}"
-        cat > /etc/systemd/system/rc-local.service <<EOF
+cat > /etc/systemd/system/rc-local.service <<EOF
 [Unit]
 Description=/etc/rc.local
 ConditionPathExists=/etc/rc.local
@@ -100,13 +100,12 @@ SysVStartPriority=99
 WantedBy=multi-user.target
 EOF
 
-        cat > /etc/rc.local <<EOF
+cat > /etc/rc.local <<EOF
 #!/bin/sh -e
 nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-exit 0
 EOF
 
         chmod +x /etc/rc.local
