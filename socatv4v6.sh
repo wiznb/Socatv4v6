@@ -52,11 +52,29 @@ get_ip(){
     ip=`curl -s http://whatismyip.akamai.com`
 }
 
-config_socat(){
+config_socat() {
     echo -e "${Green}请输入 Socat 配置信息！${Font}"
     read -p "请输入本地端口: " port1
     read -p "请输入远程端口: " port2
-    read -p "请输入远程 IP (支持 IPv4 和 IPv6): " socatip
+    read -p "请输入远程 IP (支持 IPv4 和 IPv6): " rawip
+
+    # 正则判断 IPv4
+    ipv4_regex='^([0-9]{1,3}\.){3}[0-9]{1,3}$'
+    # 简单的 IPv6 检查（匹配 : 并含至少两个段）
+    ipv6_regex='^([0-9a-fA-F]{0,4}:){2,}'
+
+    if [[ "$rawip" =~ $ipv4_regex ]]; then
+        socatip="$rawip"
+        iptype="IPv4"
+    elif [[ "$rawip" =~ $ipv6_regex ]]; then
+        socatip="[$rawip]"
+        iptype="IPv6"
+    else
+        socatip="$rawip"
+        iptype="域名"
+    fi
+
+    echo -e "${Yellow}识别为：$iptype，格式化后地址：$socatip${Font}"
 }
 
 start_socat(){
