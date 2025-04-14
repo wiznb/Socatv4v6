@@ -106,6 +106,8 @@ nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /ro
 nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+####################################################################################################################
+
 EOF
 
         chmod +x /etc/rc.local
