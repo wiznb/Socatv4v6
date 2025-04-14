@@ -102,8 +102,10 @@ EOF
 
         cat > /etc/rc.local <<EOF
 #!/bin/sh -e
-nohup socat TCP-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-nohup socat -T 600 UDP-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 exit 0
 EOF
 
