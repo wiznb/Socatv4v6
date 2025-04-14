@@ -61,27 +61,27 @@ config_socat(){
 
 start_socat(){
     echo -e "${Green}正在配置 Socat...${Font}"
-    nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 
     # 加入开机启动
     if [ "${OS}" == 'CentOS' ];then
         sed -i '/exit/d' /etc/rc.d/rc.local
-        echo "   nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+        echo "   nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 
      " >> /etc/rc.d/rc.local
         chmod +x /etc/rc.d/rc.local
     elif [ -s /etc/rc.local ]; then
         sed -i '/exit/d' /etc/rc.local
-        echo "   nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-     nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+        echo "   nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
      
      " >> /etc/rc.local
         chmod +x /etc/rc.local
@@ -106,10 +106,10 @@ EOF
 
         cat > /etc/rc.local <<EOF
 #!/bin/sh -e
-    nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
-    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP4-LISTEN:${port1},reuseaddr,fork TCP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat TCP6-LISTEN:${port1},bind=[::],reuseaddr,fork TCP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP4-LISTEN:${port1},reuseaddr,fork UDP4:${socatip}:${port2} >> /root/socat.log 2>&1 &
+    nohup socat -T 600 UDP6-LISTEN:${port1},bind=[::],reuseaddr,fork UDP6:[${socatip}]:${port2} >> /root/socat.log 2>&1 &
 
 EOF
 
