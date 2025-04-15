@@ -1,5 +1,5 @@
 # Socatv4v6
-Socat一键转发，支持IPv4和IPv6
+Socat一键转发，支持IPv4、IPv6、域名
 ```
 wget https://raw.githubusercontent.com/wiznb/Socatv4v6/main/socatv4v6.sh && bash socatv4v6.sh
 ```
